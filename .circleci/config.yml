@@ -7,7 +7,11 @@ jobs:
   build:
     docker:
       # specify the version you desire here
+<<<<<<< HEAD
       - image: circleci/node:10.9
+=======
+      - image: circleci/node:10.9.0-jessie
+>>>>>>> upgrading the node
 
       # Specify service dependencies here if necessary
       # CircleCI maintains a library of pre-built images
