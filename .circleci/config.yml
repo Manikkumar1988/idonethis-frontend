@@ -36,13 +36,21 @@ jobs:
           
       # run tests!
       - run: npm run test-headless
+      - run: npm run build
+      - persist_to_workspace:
+          # Must be an absolute path, or relative path from working_directory. This is a directory on the container which is 
+          # taken to be the root directory of the workspace.
+          root: ~/repo
+          # Must be relative path from root
+          paths:
+            - /dist
   deploy:
+    working_directory: ~/repo
     docker:
       - image: buildpack-deps:trusty
     steps:
-      - checkout
-      - run: npm install
-      - run: npm run build
+      - attach_workspace:
+          at: ~/repo
       - run:
           name: Deploy Master to Heroku
           command: |
