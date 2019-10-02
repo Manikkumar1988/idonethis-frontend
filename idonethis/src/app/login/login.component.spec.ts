@@ -42,5 +42,7 @@ describe('LoginComponent', () => {
     const loginButton = fixture.debugElement.query(By.css('#loginButton')).nativeElement;
     expect(loginButton).toBeTruthy();
     expect(loginButton.type).toEqual("button");
+    expect(loginButton.value).toEqual("Login");
+
   });
 });
