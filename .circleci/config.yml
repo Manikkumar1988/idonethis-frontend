@@ -7,7 +7,7 @@ jobs:
   build:
     docker:
       # specify the version you desire here
-      - image: circleci/node:10.9.0-jessie
+      - image: circleci/node:10.9.0
 
 
       # Specify service dependencies here if necessary
@@ -33,5 +33,6 @@ jobs:
             - node_modules
           key: v1-dependencies-{{ checksum "package.json" }}
 
+      - run: wget https://dl.google.com/linux/direct/google-chrome-stable_current_amd64.deb dpkg -i google-chrome-stable_current_amd64.deb; apt-get -fy install
       # run tests!
       - run: npm run test-headless
