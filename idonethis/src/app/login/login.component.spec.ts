@@ -26,8 +26,21 @@ describe('LoginComponent', () => {
 
   it('should display username textfield', () => {
     const userNameTextBox = fixture.debugElement.query(By.css('#userName')).nativeElement;
-    
     expect(userNameTextBox).toBeTruthy();
     expect(userNameTextBox.placeholder).toEqual("Email");
+  });
+
+
+  it('should display password textfield', () => {
+    const passwordTextBox = fixture.debugElement.query(By.css('#password')).nativeElement;
+    expect(passwordTextBox).toBeTruthy();
+    expect(passwordTextBox.placeholder).toEqual("password");
+    expect(passwordTextBox.type).toEqual("password");
+  });
+
+  it('should display login button', () => {
+    const loginButton = fixture.debugElement.query(By.css('#loginButton')).nativeElement;
+    expect(loginButton).toBeTruthy();
+    expect(loginButton.type).toEqual("button");
   });
 });
