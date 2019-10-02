@@ -7,7 +7,7 @@ jobs:
   build:
     docker:
       # specify the version you desire here
-      - image: circleci/node:10.9.0-jessie
+      - image: markhobson/node-chrome
 
 
       # Specify service dependencies here if necessary
@@ -25,10 +25,6 @@ jobs:
             - v1-dependencies-{{ checksum "package.json" }}
             # fallback to using the latest cache if no exact match is found
             - v1-dependencies-
-
-      - run: npm install
-      - run: wget https://dl.google.com/linux/direct/google-chrome-stable_current_amd64.deb
-      - run: sudo apt-get install -f
 
       - save_cache:
           paths:
