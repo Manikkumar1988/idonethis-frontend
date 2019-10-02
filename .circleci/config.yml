@@ -28,9 +28,8 @@ jobs:
 
       - run: npm install
       - run: wget https://dl.google.com/linux/direct/google-chrome-stable_current_amd64.deb
-      - run: sudo dpkg -i ./google-chrome*.deb
       - run: sudo apt-get install -f
-      
+
       - save_cache:
           paths:
             - node_modules
