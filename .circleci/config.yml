@@ -58,7 +58,7 @@ jobs:
           name: setting up heroku container
           command: .circleci/setup-heroku.sh
       - run:
-          name: Deploy to Heroku
+          name: building and pushing image
           command: heroku container:push web --app $HEROKU_APP_NAME
       - run:
           name: Deploy to Heroku
