@@ -37,20 +37,20 @@ jobs:
       # run tests!
       - run: npm run test-headless
       - run: 
-        name: Login to heroku docker
-        command: docker login -username=$HEROKU_USERNAME --password=$HEROKU_API_KEY registry.heroku.com 
+          name: Login to heroku docker
+          command: docker login -username=$HEROKU_USERNAME --password=$HEROKU_API_KEY registry.heroku.com 
       - run:
-        name: build locally
-        command: docker build --rm=false -t registry.heroku.com/$HEROKU_APP_NAME/web .
+          name: build locally
+          command: docker build --rm=false -t registry.heroku.com/$HEROKU_APP_NAME/web .
       - run:
-        name: push docker
-        command: docker push registry.heroku.com/$HEROKU_APP_NAME/web:latest
+          name: push docker
+          command: docker push registry.heroku.com/$HEROKU_APP_NAME/web:latest
       - run:
-        name: Setup Heroku
-        command: chmod +x .circleci/setup-heroku.sh
+          name: Setup Heroku
+          command: chmod +x .circleci/setup-heroku.sh
       - run:
-        name: Setup Heroku
-        command: .circleci/setup-heroku.sh
+          name: Setup Heroku
+          command: .circleci/setup-heroku.sh
       - run:
-        name: Deploy to Heroku
-        command: heroku container:release web --app $HEROKU_APP_NAME
+          name: Deploy to Heroku
+          command: heroku container:release web --app $HEROKU_APP_NAME
