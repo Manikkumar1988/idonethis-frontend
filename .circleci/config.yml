@@ -16,7 +16,6 @@ jobs:
       # - image: circleci/mongo:3.4.4
 
     working_directory: ~/repo
-    machine: true
     steps:
       - checkout
       # Download and cache dependencies
@@ -36,6 +35,19 @@ jobs:
           
       # run tests!
       - run: npm run test-headless
+      - setup_remote_docker:   # (2)
+          docker_layer_caching: true # (3)
+
+      # use a primary image that already has Docker (recommended)
+      # or install it during a build like we do here
+      - run:
+          name: Install Docker client
+          command: |
+            set -x
+            VER="17.03.0-ce"
+            curl -L -o /tmp/docker-$VER.tgz https://download.docker.com/linux/static/stable/x86_64/docker-$VER.tgz
+            tar -xz -C /tmp -f /tmp/docker-$VER.tgz
+            mv /tmp/docker/* /usr/bin
       - run: 
           name: Login to heroku docker
           command: docker login -username=$HEROKU_USERNAME --password=$HEROKU_API_KEY registry.heroku.com 
