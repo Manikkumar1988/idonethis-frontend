@@ -59,7 +59,7 @@ jobs:
           command: .circleci/setup-heroku.sh
       - run:
           name: Deploy to Heroku
-          command: heroku container:push web
+          command: heroku container:push web --app $HEROKU_APP_NAME
       - run:
           name: Deploy to Heroku
-          command: heroku container:release web
+          command: heroku container:release web --app $HEROKU_APP_NAME
