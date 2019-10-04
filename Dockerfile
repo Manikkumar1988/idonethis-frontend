@@ -12,4 +12,4 @@ COPY --from=build-stage /app/dist/out/ /usr/share/nginx/html
 # Copy the default nginx.conf provided by tiangolo/node-frontend
 COPY --from=build-stage /app/nginx.conf /etc/nginx/conf.d/default.conf
 COPY --from=build-stage /app/heroku-nginx.sh /home
-CMD sed -i -e 's/$PORT_HEROKU/'"$PORT"'/g' /etc/nginx/conf.d/default.conf  
+CMD sed -i -e 's/$HEROKU/'"$PORT"'/g' /etc/nginx/conf.d/default.conf  
