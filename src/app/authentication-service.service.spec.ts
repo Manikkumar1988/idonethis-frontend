@@ -2,7 +2,7 @@ import { TestBed, inject } from '@angular/core/testing';
 import {HttpClientTestingModule, HttpTestingController} from '@angular/common/http/testing';
 import { AuthenticationServiceService } from './authentication-service.service';
 
-fdescribe('AuthenticationServiceService', () => {
+describe('AuthenticationServiceService', () => {
   beforeEach(() => TestBed.configureTestingModule({
     imports: [HttpClientTestingModule],
     providers: [AuthenticationServiceService,
@@ -15,7 +15,7 @@ fdescribe('AuthenticationServiceService', () => {
     expect(service).toBeTruthy();
   });
 
-  fdescribe('login()', ()=> {
+  describe('login()', ()=> {
     beforeEach(()=> {
       let store = {};
   const mockLocalStorage = {
@@ -41,7 +41,7 @@ fdescribe('AuthenticationServiceService', () => {
     });
   
 
-  fit('should login for valid username and password',
+  it('should login for valid username and password',
   inject([HttpTestingController, AuthenticationServiceService], (httpMock: HttpTestingController, authenticationServiceService: AuthenticationServiceService) => {
 
     const mockResponse = 
@@ -66,7 +66,7 @@ fdescribe('AuthenticationServiceService', () => {
       }));
 
 
-      fit('should not login for invalid username and password',
+      it('should not login for invalid username and password',
   inject([HttpTestingController, AuthenticationServiceService], (httpMock: HttpTestingController, authenticationServiceService: AuthenticationServiceService) => {
 
     const mockErrorResponse = { status: 400, statusText: 'Bad Request' };
