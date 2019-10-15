@@ -32,6 +32,4 @@ xdescribe('AppComponent', () => {
     const compiled = fixture.debugElement.nativeElement;
     expect(compiled.querySelector('.content span').textContent).toContain('idonethis app is running!');
   });
-
-  
 });
