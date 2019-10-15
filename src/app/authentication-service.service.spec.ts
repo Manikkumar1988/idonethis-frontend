@@ -14,9 +14,18 @@ describe('AuthenticationServiceService', () => {
     const service: AuthenticationServiceService = TestBed.get(AuthenticationServiceService);
     expect(service).toBeTruthy();
   });
+});
+
 
   describe('login()', ()=> {
     beforeEach(()=> {
+
+      TestBed.configureTestingModule({
+        imports: [HttpClientTestingModule],
+        providers: [AuthenticationServiceService,
+        ]
+      });
+
       let store = {};
   const mockLocalStorage = {
     getItem: (key: string): string => {
@@ -87,5 +96,3 @@ describe('AuthenticationServiceService', () => {
     }));
 
   });
-
-});
