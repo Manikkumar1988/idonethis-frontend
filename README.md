@@ -1,3 +1,5 @@
+[![CircleCI](https://circleci.com/gh/Manikkumar1988/idonethis-frontend.svg?style=svg)](https://circleci.com/gh/Manikkumar1988/idonethis-frontend)
+
 # Idonethis
 
 This project was generated with [Angular CLI](https://github.com/angular/angular-cli) version 8.3.6.

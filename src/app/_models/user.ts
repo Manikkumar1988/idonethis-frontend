@@ -6,3 +6,7 @@
     lastName: string;
     token: string;
 }
+export class Video {
+    name: String;
+    id: String;
+}
