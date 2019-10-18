@@ -5,7 +5,7 @@ import { AuthenticationServiceService } from '../authentication-service.service'
 import { Observable } from 'rxjs';
 import { User } from '../_models/user';
 
-describe('LoginComponent', () => {
+describe('LoginComponent -> Success', () => {
   let component: LoginComponent;
   let fixture: ComponentFixture<LoginComponent>;
   const userService = jasmine.createSpyObj('AuthenticationServiceService', [
@@ -81,6 +81,34 @@ describe('LoginComponent', () => {
     expect(userService.login).toHaveBeenCalledWith('test@test.com', '123456789');
   });
 
+});
+
+
+describe('LoginComponent -> Error', () => {
+  let component: LoginComponent;
+  let fixture: ComponentFixture<LoginComponent>;
+  const userService = jasmine.createSpyObj('AuthenticationServiceService', [
+    'login'
+  ]);
+
+  beforeEach(async(() => {
+    TestBed.configureTestingModule({
+      declarations: [LoginComponent],
+      providers: [
+        { provide: AuthenticationServiceService, useValue: userService }
+      ],
+      imports: [ReactiveFormsModule]
+    });
+  }));
+
+  beforeEach(() => {
+    fixture = TestBed.createComponent(LoginComponent);
+    userService.login.and.returnValue(
+      new Observable(subscriber => subscriber.next(new User()))
+    );
+    component = fixture.componentInstance;
+    fixture.detectChanges();
+  });
 
   it('Invalid username and password should not make a api call', () => {
     expect(component.loginForm.valid).toBeFalsy();
