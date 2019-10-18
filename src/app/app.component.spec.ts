@@ -1,8 +1,11 @@
 import { TestBed, async } from '@angular/core/testing';
+import { Router } from '@angular/router';
 import { RouterTestingModule } from '@angular/router/testing';
 import { AppComponent } from './app.component';
 
-xdescribe('AppComponent', () => {
+describe('AppComponent', () => {
+  const routerSpy = jasmine.createSpyObj('Router', ['navigate']);
+
   beforeEach(async(() => {
     TestBed.configureTestingModule({
       imports: [
@@ -11,6 +14,9 @@ xdescribe('AppComponent', () => {
       declarations: [
         AppComponent
       ],
+      providers: [
+        { provide: Router, useValue: routerSpy }
+      ]
     }).compileComponents();
   }));
 
@@ -20,16 +26,12 @@ xdescribe('AppComponent', () => {
     expect(app).toBeTruthy();
   });
 
-  it(`should have as title 'idonethis'`, () => {
-    const fixture = TestBed.createComponent(AppComponent);
-    const app = fixture.debugElement.componentInstance;
-    expect(app.title).toEqual('idonethis');
-  });
 
-  it('should render title', () => {
+  it('should redirect to login page', () => {
     const fixture = TestBed.createComponent(AppComponent);
     fixture.detectChanges();
     const compiled = fixture.debugElement.nativeElement;
-    expect(compiled.querySelector('.content span').textContent).toContain('idonethis app is running!');
+    expect(routerSpy.navigate).toHaveBeenCalled();
+    expect(routerSpy.navigate).toHaveBeenCalledWith(['/login']);
   });
 });

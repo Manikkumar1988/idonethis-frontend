@@ -8,7 +8,9 @@ import { LoginComponent } from './login/login.component';
 import { AuthenticationServiceService } from './authentication-service.service';
 
 @NgModule({
-  declarations: [AppComponent, LoginComponent],
+  declarations: [
+    AppComponent,
+    LoginComponent],
   imports: [
     BrowserModule,
     ReactiveFormsModule,
@@ -16,6 +18,6 @@ import { AuthenticationServiceService } from './authentication-service.service';
     HttpClientModule
   ],
   providers: [AuthenticationServiceService],
-  bootstrap: [LoginComponent]
+  bootstrap: [AppComponent]
 })
 export class AppModule {}

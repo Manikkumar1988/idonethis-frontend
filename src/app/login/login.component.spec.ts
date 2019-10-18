@@ -51,7 +51,19 @@ describe('LoginComponent', () => {
     expect(errors['required']).toBeTruthy();
   });
 
-  it('username field invalidity', () => {
+  it('password field validity', () => {
+    const password = component.loginForm.controls.password;
+    expect(password.valid).toBeFalsy();
+  });
+
+  it('password field invalidity', () => {
+    let errors = {};
+    const password = component.loginForm.controls.password;
+    errors = password.errors || {};
+    expect(errors['required']).toBeTruthy();
+  });
+
+  it('username field validity upon value', () => {
     const username = component.loginForm.controls.username;
     username.setValue('test');
     expect(username.valid).toBeTruthy();
