@@ -1,7 +1,8 @@
 import { Injectable } from '@angular/core';
-import { HttpClient } from '@angular/common/http';
+import { HttpClient, HttpErrorResponse } from '@angular/common/http';
 import { User } from './_models/user';
-import { map } from 'rxjs/operators';
+import { map, catchError } from 'rxjs/operators';
+import { Observable } from 'rxjs';
 
 @Injectable({
   providedIn: 'root'
@@ -16,7 +17,18 @@ export class AuthenticationServiceService {
         map(user => {
           localStorage.setItem('currentUser', JSON.stringify(user));
           return user;
-        })
+        }),
+        catchError(
+          (e: HttpErrorResponse): Observable<User> => {
+            return new Observable<User>(subscriber =>
+              subscriber.next(new User())
+            );
+          }
+        )
       );
+  }
+
+  logout() {
+    localStorage.removeItem('currentUser');
   }
 }

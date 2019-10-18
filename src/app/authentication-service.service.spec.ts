@@ -47,6 +47,8 @@ describe('AuthenticationServiceService -> login()', () => {
     spyOn(localStorage, 'getItem').and.callFake(mockLocalStorage.getItem);
 
     spyOn(localStorage, 'setItem').and.callFake(mockLocalStorage.setItem);
+
+    spyOn(localStorage, 'removeItem').and.callFake(mockLocalStorage.removeItem);
   });
 
   it('should login for valid username and password', inject(
@@ -92,14 +94,45 @@ describe('AuthenticationServiceService -> login()', () => {
       authenticationServiceService
         .login('abc@a.com', 'pass@123')
         .subscribe(user => {
-          expect(user.username).toEqual(``);
-          expect(user.password).toEqual(``);
-          expect(localStorage.getItem('currentUser')).toEqual(``);
+          expect(user.username).toBeUndefined();
+          expect(user.password).toBeUndefined();
         });
 
       const req = httpMock.expectOne(`http://localhost:8089/login`);
       expect(req.request.method).toEqual('POST');
       req.flush(data, mockErrorResponse);
+    }
+  ));
+
+  it('should not login for network error', inject(
+    [HttpTestingController, AuthenticationServiceService],
+    (
+      httpMock: HttpTestingController,
+      authenticationServiceService: AuthenticationServiceService
+    ) => {
+      const mockErrorResponse = { status: 400, statusText: 'Bad Request' };
+      const data = 'Invalid request parameters';
+
+      authenticationServiceService
+        .login('abc@a.com', 'pass@123')
+        .subscribe(user => {
+          expect(user.username).toBeUndefined();
+          expect(user.password).toBeUndefined();
+        });
+
+      const req = httpMock.expectOne(`http://localhost:8089/login`);
+      expect(req.request.method).toEqual('POST');
+      req.error(new ErrorEvent('network error'), mockErrorResponse);
+    }
+  ));
+
+  it('should clear local storage on logout', inject(
+    [AuthenticationServiceService],
+    (authenticationServiceService: AuthenticationServiceService) => {
+      authenticationServiceService.logout();
+
+      expect(localStorage.removeItem).toHaveBeenCalledWith('currentUser');
+      expect(localStorage.removeItem).toHaveBeenCalled();
     }
   ));
 });
