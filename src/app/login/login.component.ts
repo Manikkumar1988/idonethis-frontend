@@ -44,5 +44,9 @@ export class LoginComponent implements OnInit {
                 this.loading = false;
             });
 }
-
+  
+//register with todo
+onRegister(){
+  //should reach to the registration page once it is clicked
+}
 }
