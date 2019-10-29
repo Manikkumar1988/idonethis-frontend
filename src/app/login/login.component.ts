@@ -47,6 +47,7 @@ export class LoginComponent implements OnInit {
   
 //register with todo
 onRegister(){
+ console.log("Register");
   //should reach to the registration page once it is clicked
 }
 }
