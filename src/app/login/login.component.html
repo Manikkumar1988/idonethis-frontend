@@ -1,4 +1,4 @@
-<form [formGroup]="loginForm" (ngSubmit)="onSubmit()">
+﻿<form [formGroup]="loginForm" (ngSubmit)="onSubmit()">
     <div class="form-group">
         <label for="username">Username</label>
         <input type="text" id="userName" formControlName="username" class="form-control" [ngClass]="{ 'is-invalid': submitted && f.username.errors }" />
@@ -13,17 +13,18 @@
             <div *ngIf="f.password.errors.required">Password is required</div>
         </div>
     </div>
-    <div class="form-group">
-        <button [disabled]="loading" class="btn btn-primary">
-            <span *ngIf="loading" class="spinner-border spinner-border-sm mr-1"></span>
-            Login
-        </button>
+    <div class="row">
+        <div class="form-group col-md-2">
+            <button [disabled]="loading" class="btn btn-primary">
+                <span *ngIf="loading" class="spinner-border spinner-border-sm mr-1"></span>
+                Login
+            </button>
+        </div>
+        <div class="form-group col-md-2">
+            <button [disabled]="loading" class="btn btn-primary" (click)="onRegister()">
+                <span *ngIf="loading" class="spinner-border spinner-border-sm mr-1"></span> Register
+            </button>
+        </div>
     </div>
 
 </form>
-<div class="form-group">
-    <button [disabled]="loading" class="btn btn-primary" (click)="onRegister()"> 
-        <span *ngIf="loading" class="spinner-border spinner-border-sm mr-1"></span>
-        Register 
-    </button>
-</div>
