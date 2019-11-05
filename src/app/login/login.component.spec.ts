@@ -4,10 +4,14 @@ import { LoginComponent } from './login.component';
 import { AuthenticationServiceService } from '../authentication-service.service';
 import { Observable } from 'rxjs';
 import { User } from '../_models/user';
+import { RouterTestingModule } from '@angular/router/testing';
+import { RouterLinkWithHref } from '@angular/router';
+import { By } from '@angular/platform-browser';
 
 describe('LoginComponent -> Success', () => {
   let component: LoginComponent;
   let fixture: ComponentFixture<LoginComponent>;
+  
   const userService = jasmine.createSpyObj('AuthenticationServiceService', [
     'login'
   ]);
@@ -18,7 +22,8 @@ describe('LoginComponent -> Success', () => {
       providers: [
         { provide: AuthenticationServiceService, useValue: userService }
       ],
-      imports: [ReactiveFormsModule]
+      imports: [ReactiveFormsModule,
+                RouterTestingModule]
     });
   }));
 
@@ -80,7 +85,14 @@ describe('LoginComponent -> Success', () => {
     expect(userService.login).toHaveBeenCalled();
     expect(userService.login).toHaveBeenCalledWith('test@test.com', '123456789');
   });
+it('should go to register page on clicking register link',() =>{
+  const  debugEl = fixture.debugElement;
+  const linkDebugEl = debugEl.query(By.css('a')); 
+  const routerLinkInstance = linkDebugEl.injector.get(RouterLinkWithHref);
+  expect(routerLinkInstance['commands']).toEqual(['/register']); 
+  expect(routerLinkInstance['href']).toEqual('/register');
 
+})
 });
 
 
