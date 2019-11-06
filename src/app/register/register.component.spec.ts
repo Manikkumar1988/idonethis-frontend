@@ -67,4 +67,16 @@ describe('RegisterComponent ->Success', () => {
     errors = password.errors || {};
     expect(errors['required']).toBeTruthy();
   });
+
+  it('firstname field validity', () => {
+    const firstName = component.registerForm.controls.firstName;
+    expect(firstName.valid).toBeFalsy();
+  });
+  
+  it('firstname field invalidity', () => {
+    let errors = {};
+    const firstName = component.registerForm.controls.firstName;
+    errors = firstName.errors || {};
+    expect(errors['required']).toBeTruthy();
+  });
 });
