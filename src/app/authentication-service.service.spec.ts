@@ -136,3 +136,30 @@ describe('AuthenticationServiceService -> login()', () => {
     }
   ));
 });
+describe('AuthenticationServiceService -> register()', () => {
+  beforeEach(() => {
+    TestBed.configureTestingModule({
+      imports: [HttpClientTestingModule],
+      providers: [AuthenticationServiceService]
+    });
+  });
+  it('should register for valid firstname , username and password',inject(
+    [HttpTestingController, AuthenticationServiceService],
+    (
+      httpMock: HttpTestingController,
+      authenticationServiceService: AuthenticationServiceService
+    ) =>{
+      const mockResponse ={ status: 'success'};
+
+      authenticationServiceService
+      .register('firstName','username','password')
+      .subscribe(user => {
+        expect(user.status).toEqual(`success`);
+
+      });
+      const req = httpMock.expectOne(`http://localhost:8089/register`);
+      expect(req.request.method).toEqual('POST');
+      req.flush(mockResponse);
+    }
+  ));
+});
