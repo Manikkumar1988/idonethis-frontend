@@ -182,4 +182,26 @@ describe('AuthenticationServiceService -> register()', () => {
       req.flush(mockErrorResponse);
     }
   ));
+
+  it('should not register for network error',inject(
+    [HttpTestingController, AuthenticationServiceService],
+    (
+      httpMock: HttpTestingController,
+      authenticationServiceService: AuthenticationServiceService
+    ) => {
+      const mockErrorResponse = { requestStatus: 400, statusText: 'Bad Request' };
+      const data = 'Invalid request parameters';
+
+      authenticationServiceService
+      .register('firstName','username','password')
+      .subscribe(user => {
+        expect(user.firstname).toBeUndefined();
+        expect(user.username).toBeUndefined();
+        expect(user.password).toBeUndefined();
+      });
+      const req = httpMock.expectOne(`http://localhost:8089/register`);
+      expect(req.request.method).toEqual('POST');
+      req.error(new ErrorEvent('network error'), mockErrorResponse);
+    }
+  ));
 });
