@@ -79,4 +79,12 @@ describe('RegisterComponent ->Success', () => {
     errors = firstName.errors || {};
     expect(errors['required']).toBeTruthy();
   });
+  it('should go to login page on clicking cancel button',() =>{
+    const  debugEl = fixture.debugElement;
+    const linkDebugEl = debugEl.query(By.css('a')); 
+    const routerLinkInstance = linkDebugEl.injector.get(RouterLinkWithHref);
+    expect(routerLinkInstance['commands']).toEqual(['/login']); 
+    expect(routerLinkInstance['href']).toEqual('/login');
+  
+  })
 });
