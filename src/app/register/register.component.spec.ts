@@ -79,6 +79,20 @@ describe('RegisterComponent ->Success', () => {
     errors = firstName.errors || {};
     expect(errors['required']).toBeTruthy();
   });
+
+  it('valid username and password should make a api call', () => {
+    expect(component.registerForm.valid).toBeFalsy();
+    component.registerForm.controls.firstName.setValue('firstName');
+    component.registerForm.controls.username.setValue('username');
+    component.registerForm.controls.password.setValue('password');
+    expect(component.registerForm.valid).toBeTruthy();
+
+    component.onSubmit();
+
+    expect(userService.register).toHaveBeenCalled();
+    expect(userService.register).toHaveBeenCalledWith('firstName', 'username', 'password');
+  });
+
   it('should go to login page on clicking cancel button',() =>{
     const  debugEl = fixture.debugElement;
     const linkDebugEl = debugEl.query(By.css('a')); 
@@ -86,5 +100,5 @@ describe('RegisterComponent ->Success', () => {
     expect(routerLinkInstance['commands']).toEqual(['/login']); 
     expect(routerLinkInstance['href']).toEqual('/login');
   
-  })
+  });
 });
