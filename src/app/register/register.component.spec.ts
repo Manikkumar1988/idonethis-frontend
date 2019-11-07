@@ -80,7 +80,7 @@ describe('RegisterComponent ->Success', () => {
     expect(errors['required']).toBeTruthy();
   });
 
-  it('valid username and password should make a api call', () => {
+  it('valid firstname, username and password should make a api call', () => {
     expect(component.registerForm.valid).toBeFalsy();
     component.registerForm.controls.firstName.setValue('firstName');
     component.registerForm.controls.username.setValue('username');
@@ -100,5 +100,45 @@ describe('RegisterComponent ->Success', () => {
     expect(routerLinkInstance['commands']).toEqual(['/login']); 
     expect(routerLinkInstance['href']).toEqual('/login');
   
+  });
+  //on successful registration it should go to login page
+});
+describe('RegisterComponent ->failure', () => {
+  let component: RegisterComponent;
+  let fixture: ComponentFixture<RegisterComponent>;
+
+  const userService = jasmine.createSpyObj('AuthenticationServiceService', [
+    'register'
+  ]);
+
+  beforeEach(async(() => {
+    TestBed.configureTestingModule({
+      declarations: [ RegisterComponent ],
+      providers: [
+        { provide: AuthenticationServiceService, useValue: userService }
+      ],
+      imports: [ReactiveFormsModule,
+                RouterTestingModule]
+    });
+  }));
+
+  beforeEach(() => {
+    fixture = TestBed.createComponent(RegisterComponent);
+    userService.register.and.returnValue(
+      new Observable(subscriber => subscriber.next(new Status()))
+    );
+    component = fixture.componentInstance;
+    fixture.detectChanges();
+  });
+
+  it('Invalid firstname, username and password should make a api call', () => {
+    expect(component.registerForm.valid).toBeFalsy();
+    component.registerForm.controls.firstName.setValue('');
+    component.registerForm.controls.username.setValue('');
+    component.registerForm.controls.password.setValue('');
+    expect(component.registerForm.invalid).toBeTruthy();
+
+    component.onSubmit();
+    expect(userService.register).not.toHaveBeenCalled();
   });
 });
