@@ -3,7 +3,7 @@ import { HttpClient, HttpErrorResponse } from '@angular/common/http';
 import { User } from './_models/user';
 import { Status } from './_models/status';
 import { map, catchError } from 'rxjs/operators';
-import { Observable } from 'rxjs';
+import { Observable, throwError } from 'rxjs';
 
 @Injectable({
   providedIn: 'root'
@@ -19,15 +19,12 @@ export class AuthenticationServiceService {
           localStorage.setItem('currentUser', JSON.stringify(user));
           return user;
         }),
-        catchError(
-          (e: HttpErrorResponse): Observable<User> => {
-            return new Observable<User>(subscriber =>
-              subscriber.next(new User())
-            );
-          }
-        )
+        catchError((e: any) =>{
+          return throwError(e);
+        })
       );
   }
+
   register(firstName: string,username: string,password :string){
     return this.http
      .post<Status>(`http://localhost:8089/register`, { firstName, username, password })
@@ -35,13 +32,9 @@ export class AuthenticationServiceService {
       map(user => {
          return user;
       }),
-      catchError(
-        (e: HttpErrorResponse): Observable<Status> => {
-          return new Observable<Status>(subscriber =>
-            subscriber.next(new Status())
-          );
-        }
-      )
+      catchError((e: any) =>{
+        return throwError(e);
+      })
     );
 
   }

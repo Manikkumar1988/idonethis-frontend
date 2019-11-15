@@ -104,7 +104,7 @@ describe('AuthenticationServiceService -> login()', () => {
     }
   ));
 
-  it('should not login for network error', inject(
+  it('should not login for API error', inject(
     [HttpTestingController, AuthenticationServiceService],
     (
       httpMock: HttpTestingController,
@@ -183,7 +183,7 @@ describe('AuthenticationServiceService -> register()', () => {
     }
   ));
 
-  it('should not register for network error',inject(
+  it('should not register for API error',inject(
     [HttpTestingController, AuthenticationServiceService],
     (
       httpMock: HttpTestingController,
