@@ -9,8 +9,8 @@ import { HomePageComponent } from './home-page/home-page.component';
 const routes: Routes = [
   { path: 'login', component: LoginComponent },
   { path: 'register', component: RegisterComponent },
-  { path: '**', component: AppComponent},
-  { path: 'home', component: HomePageComponent} 
+  { path: 'home', component: HomePageComponent}, 
+  { path: '**', component: AppComponent}
 ];
 
 @NgModule({
