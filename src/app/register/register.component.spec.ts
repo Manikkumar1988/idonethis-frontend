@@ -8,6 +8,7 @@ import { RouterTestingModule } from '@angular/router/testing';
 import { RouterLinkWithHref } from '@angular/router';
 import { By } from '@angular/platform-browser';
 import { Router } from '@angular/router';
+import { LoginComponent } from '../login/login.component';
 
 describe('RegisterComponent ->Success', () => {
   let component: RegisterComponent;
@@ -21,12 +22,15 @@ describe('RegisterComponent ->Success', () => {
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
-      declarations: [ RegisterComponent ],
+      declarations: [ RegisterComponent,
+      LoginComponent ],
       providers: [
         { provide: AuthenticationServiceService, useValue: userService }
       ],
       imports: [ReactiveFormsModule,
-                RouterTestingModule.withRoutes([])]
+                RouterTestingModule.withRoutes([
+                  { path: 'login', component: LoginComponent }
+                ])]
               });
   }));
 
