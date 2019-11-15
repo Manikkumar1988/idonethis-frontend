@@ -136,6 +136,7 @@ describe('AuthenticationServiceService -> login()', () => {
     }
   ));
 });
+
 describe('AuthenticationServiceService -> register()', () => {
   beforeEach(() => {
     TestBed.configureTestingModule({
@@ -143,6 +144,14 @@ describe('AuthenticationServiceService -> register()', () => {
       providers: [AuthenticationServiceService]
     });
   });
+
+  afterEach(inject(
+    [HttpTestingController],
+    (httpMock: HttpTestingController) => {
+      httpMock.verify();
+    }
+  ));
+  
   it('should register for valid firstname , username and password',inject(
     [HttpTestingController, AuthenticationServiceService],
     (
