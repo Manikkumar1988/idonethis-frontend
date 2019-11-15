@@ -7,12 +7,16 @@ import { AppComponent } from './app.component';
 import { LoginComponent } from './login/login.component';
 import { AuthenticationServiceService } from './authentication-service.service';
 import { RegisterComponent } from './register/register.component';
+import { AddTodoComponent } from './add-todo/add-todo.component';
+import { HomePageComponent } from './home-page/home-page.component';
 
 @NgModule({
   declarations: [
     AppComponent,
     LoginComponent,
-    RegisterComponent],
+    RegisterComponent,
+    AddTodoComponent,
+    HomePageComponent],
   imports: [
     BrowserModule,
     ReactiveFormsModule,

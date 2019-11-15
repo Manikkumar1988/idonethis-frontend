@@ -7,10 +7,13 @@ import { User } from '../_models/user';
 import { RouterTestingModule } from '@angular/router/testing';
 import { RouterLinkWithHref } from '@angular/router';
 import { By } from '@angular/platform-browser';
+import { Router } from '@angular/router';
+
 
 describe('LoginComponent -> Success', () => {
   let component: LoginComponent;
   let fixture: ComponentFixture<LoginComponent>;
+  let router: Router;
   
   const userService = jasmine.createSpyObj('AuthenticationServiceService', [
     'login'
@@ -23,12 +26,13 @@ describe('LoginComponent -> Success', () => {
         { provide: AuthenticationServiceService, useValue: userService }
       ],
       imports: [ReactiveFormsModule,
-                RouterTestingModule]
+                RouterTestingModule.withRoutes([])]
     });
   }));
 
   beforeEach(() => {
     fixture = TestBed.createComponent(LoginComponent);
+    router = TestBed.get(Router);
     userService.login.and.returnValue(
       new Observable(subscriber => subscriber.next(new User()))
     );
@@ -85,6 +89,22 @@ describe('LoginComponent -> Success', () => {
     expect(userService.login).toHaveBeenCalled();
     expect(userService.login).toHaveBeenCalledWith('test@test.com', '123456789');
   });
+
+  it('should go to home page on successfull login',() =>{
+    const component = fixture.componentInstance;
+    const navigateSpy = spyOn(router, 'navigate');
+
+    component.loginForm.controls.username.setValue('username');
+    component.loginForm.controls.password.setValue('password');
+    expect(component.loginForm.valid).toBeTruthy();
+
+    component.onSubmit();
+
+    expect(navigateSpy).toHaveBeenCalledWith(['/home']);
+  });
+
+
+
 it('should go to register page on clicking register link',() =>{
   const  debugEl = fixture.debugElement;
   const linkDebugEl = debugEl.query(By.css('a')); 
@@ -109,7 +129,8 @@ describe('LoginComponent -> Error', () => {
       providers: [
         { provide: AuthenticationServiceService, useValue: userService }
       ],
-      imports: [ReactiveFormsModule]
+      imports: [ReactiveFormsModule,
+        RouterTestingModule.withRoutes([])]
     });
   }));
 
