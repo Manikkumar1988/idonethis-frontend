@@ -96,6 +96,8 @@ describe('AuthenticationServiceService -> login()', () => {
         .subscribe(user => {
           expect(user.username).toBeUndefined();
           expect(user.password).toBeUndefined();
+        }, error => {
+
         });
 
       const req = httpMock.expectOne(`http://localhost:8089/login`);
@@ -118,6 +120,8 @@ describe('AuthenticationServiceService -> login()', () => {
         .subscribe(user => {
           expect(user.username).toBeUndefined();
           expect(user.password).toBeUndefined();
+        }, error => {
+          
         });
 
       const req = httpMock.expectOne(`http://localhost:8089/login`);
@@ -151,7 +155,7 @@ describe('AuthenticationServiceService -> register()', () => {
       httpMock.verify();
     }
   ));
-  
+
   it('should register for valid firstname , username and password',inject(
     [HttpTestingController, AuthenticationServiceService],
     (
@@ -185,6 +189,8 @@ describe('AuthenticationServiceService -> register()', () => {
       .subscribe(user => {
         expect(user.requestStatus).toEqual(400);
         expect(user.statusText).toEqual('Bad Request');
+      }, error => {
+          
       });
       const req = httpMock.expectOne(`http://localhost:8089/register`);
       expect(req.request.method).toEqual('POST');
@@ -207,6 +213,8 @@ describe('AuthenticationServiceService -> register()', () => {
         expect(user.firstname).toBeUndefined();
         expect(user.username).toBeUndefined();
         expect(user.password).toBeUndefined();
+      }, error => {
+          
       });
       const req = httpMock.expectOne(`http://localhost:8089/register`);
       expect(req.request.method).toEqual('POST');
