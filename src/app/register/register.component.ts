@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { AuthenticationServiceService } from '../authentication-service.service';
 import { first } from 'rxjs/operators';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-register',
@@ -14,7 +15,8 @@ export class RegisterComponent implements OnInit {
 	loading = false;
 	submitted = false;
 	constructor(private formBuilder: FormBuilder,
-	private authenticationService: AuthenticationServiceService) { }
+	private authenticationService: AuthenticationServiceService,
+	private router: Router) { }
 
 	ngOnInit() {
 		this.registerForm = this.formBuilder.group({
@@ -41,7 +43,7 @@ export class RegisterComponent implements OnInit {
 			.pipe(first()) // this gets the first element.
 			.subscribe(
 				data => {// on successfull registeration redirect to login page
-					//this.router.navigate([this.returnUrl]);
+					this.router.navigate(['/login']);
 				},
 				error => {
 					this.loading = false;

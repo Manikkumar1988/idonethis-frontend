@@ -3,19 +3,21 @@ import { ReactiveFormsModule } from '@angular/forms';
 import { AuthenticationServiceService } from '../authentication-service.service';
 import { RegisterComponent } from './register.component';
 import { Observable } from 'rxjs';
-import { User } from '../_models/user';
 import { Status } from '../_models/status';
 import { RouterTestingModule } from '@angular/router/testing';
 import { RouterLinkWithHref } from '@angular/router';
 import { By } from '@angular/platform-browser';
+import { Router } from '@angular/router';
 
 describe('RegisterComponent ->Success', () => {
   let component: RegisterComponent;
   let fixture: ComponentFixture<RegisterComponent>;
+  let router: Router;
 
   const userService = jasmine.createSpyObj('AuthenticationServiceService', [
     'register'
   ]);
+  
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
@@ -24,12 +26,13 @@ describe('RegisterComponent ->Success', () => {
         { provide: AuthenticationServiceService, useValue: userService }
       ],
       imports: [ReactiveFormsModule,
-                RouterTestingModule]
-    });
+                RouterTestingModule.withRoutes([])]
+              });
   }));
 
   beforeEach(() => {
     fixture = TestBed.createComponent(RegisterComponent);
+    router = TestBed.get(Router);
     userService.register.and.returnValue(
       new Observable(subscriber => subscriber.next(new Status()))
     );
@@ -101,8 +104,23 @@ describe('RegisterComponent ->Success', () => {
     expect(routerLinkInstance['href']).toEqual('/login');
   
   });
+
   //on successful registration it should go to login page
+  it('should go to login page on successfull registration',() =>{
+    const component = fixture.componentInstance;
+    const navigateSpy = spyOn(router, 'navigate');
+
+    component.registerForm.controls.firstName.setValue('firstName');
+    component.registerForm.controls.username.setValue('username');
+    component.registerForm.controls.password.setValue('password');
+    expect(component.registerForm.valid).toBeTruthy();
+
+    component.onSubmit();
+
+    expect(navigateSpy).toHaveBeenCalledWith(['/login']);
+  });
 });
+
 describe('RegisterComponent ->failure', () => {
   let component: RegisterComponent;
   let fixture: ComponentFixture<RegisterComponent>;
