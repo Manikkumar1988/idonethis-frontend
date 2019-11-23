@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { HttpClient, HttpErrorResponse } from '@angular/common/http';
+import { HttpClient,HttpHeaders, HttpErrorResponse } from '@angular/common/http';
 import { User } from './_models/user';
 import { Status } from './_models/status';
 import { map, catchError } from 'rxjs/operators';
@@ -12,8 +12,16 @@ export class AuthenticationServiceService {
   constructor(private http: HttpClient) {}
 
   login(userName: string, password: string) {
+    const httpOptions = {
+      headers: new HttpHeaders({
+        'password': password,
+        'userId': userName
+      })
+    };
+
+    console.log(httpOptions);
     return this.http
-      .post<User>(`http://localhost:8089/login`, { userName, password })
+      .get<User>(`https://idonethis-backend.herokuapp.com/user`,httpOptions)
       .pipe(
         map(user => {
           localStorage.setItem('currentUser', JSON.stringify(user));
